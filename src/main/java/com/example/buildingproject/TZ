@@ -1,0 +1,20 @@
+ADMIN user yarata olish kere (yani haridorni bazaga qosha olishi kerak)
+45ddf595-6e3f-4656-8522-fae5a1de588e,2023-12-20 09:55:57.474000,2023-12-20 09:55:57.474000,false,toirovsaidazim88@gmail.com,said,said,AS1234567,$2a$10$0YrVa5DTt5bv8//bB0hXx.7yR0LS1EbUArtldiJsF6xGPBDarnZ.q,+998333074743,USER,ACTIVE,182087,2023-12-20 09:55:36.459594
+459a65cf-e2de-4cbf-b304-2ecda4286c19,2023-12-20 09:56:56.994000,2023-12-20 09:56:56.994000,false,saidazimtoirov102uz@gmail.com,xasan,xasan,AS7654321,$2a$10$s6TOkNTsPINEP1aCGNSnzez16aAbTy7xCzICIpL.iwc9Mv50qa95i,+998946650099,ADMIN,ACTIVE,747018,2023-12-20 09:56:12.028793
+
+
+
+Tolov qilish uchun oldin HouseControllerdagi
+http://localhost:8082/api/v1/house/getOwnerHouses?passportNo=AS1234567 url ga request yuboriladi
+song unda kimni nechta uyi borligi kelib chiqadi va uwa yerdan qaysi uyiga tolov qilish kerakligini tanlab
+http://localhost:8082/api/v1/history/unpaidHistories shundan mijozni uyi uchun hali tolov qilmagan
+oylar royhat kelib chiqadi va tolovnin kerakli oyga kirgizadi.
+
+
+
+
+a7cf3e57-7b14-42e7-bcd7-2190e63ccb61,2023-12-20 16:44:42.570000,2023-12-20 16:44:42.570000,0,2000,2000,false,2023-12-20 16:44:42.569804,3708905b-1e29-4020-8365-ca38d326ccbb,45ddf595-6e3f-4656-8522-fae5a1de588e
+8ccfeb98-95d0-4340-81a4-597bb58e3dd2,2023-12-20 16:44:42.572000,2023-12-20 16:44:42.572000,0,2000,2000,false,2024-01-20 16:44:42.569804,3708905b-1e29-4020-8365-ca38d326ccbb,45ddf595-6e3f-4656-8522-fae5a1de588e
+631a8b84-59e1-4f64-b31e-4e966d0d0974,2023-12-20 16:44:42.574000,2023-12-20 16:44:42.574000,0,2000,2000,false,2024-02-20 16:44:42.569804,3708905b-1e29-4020-8365-ca38d326ccbb,45ddf595-6e3f-4656-8522-fae5a1de588e
+396952b2-faa8-49d5-afc3-aea7df2526a9,2023-12-20 16:44:42.576000,2023-12-20 16:44:42.576000,0,2000,2000,false,2024-03-20 16:44:42.569804,3708905b-1e29-4020-8365-ca38d326ccbb,45ddf595-6e3f-4656-8522-fae5a1de588e
+bb319b77-5e03-419b-a604-25f1e20d62b8,2023-12-20 16:44:42.577000,2023-12-20 16:44:42.577000,0,2000,2000,false,2024-04-20 16:44:42.569804,3708905b-1e29-4020-8365-ca38d326ccbb,45ddf595-6e3f-4656-8522-fae5a1de588e
