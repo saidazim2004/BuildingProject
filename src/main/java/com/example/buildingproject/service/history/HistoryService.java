@@ -14,4 +14,5 @@ public interface HistoryService {
 
     ArrayList<HistoryResponse> getUnpaidHistoryEntitiesForYearAndMonth(int month, int year);
 
+    ArrayList<HistoryResponse> getAllHistories(UUID userId, UUID houseId);
 }

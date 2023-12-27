@@ -50,6 +50,7 @@ public class SecurityConfiguration {
             "api/v1/auth/reset-password",
             "api/v1/auth/update-password",
             "api/v1/user/getByPhoneNumber",
+            "api/v1/history/getUserAllHistories",
             "/v3/api-docs/**",
             "/v3/api-docs.yml",
             "/swagger-ui/**",

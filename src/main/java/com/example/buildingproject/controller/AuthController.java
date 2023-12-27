@@ -40,7 +40,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/new-verification-code")
-    public ResponseEntity<String> newVerificationCode(@RequestParam String email){
+    public ResponseEntity<String> newVerificationCode(@Valid @RequestParam String email){
         String res = authService.newVerifyCode(email);
         return ResponseEntity.ok(res);
     }
@@ -52,21 +52,21 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam @Email String email){
+    public ResponseEntity<String> forgotPassword(@Valid @RequestParam @Email String email){
         String response = authService.forgotPassword(email);
         return ResponseEntity.ok(response);
 
     }
 
     @PutMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordDto resetPassword){
+    public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordDto resetPassword){
 
         String response = authService.resetPassword(resetPassword);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/update-password")
-    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
+    public ResponseEntity<String> updatePassword(@Valid @RequestBody UpdatePasswordDto updatePasswordDto){
         String response = authService.updatePassword(updatePasswordDto);
         return ResponseEntity.ok(response);
     }

@@ -1,8 +1,5 @@
 package com.example.buildingproject.dtos.response;
 
-import com.example.buildingproject.entity.HouseEntity;
-import com.example.buildingproject.entity.UserEntity;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -23,6 +20,6 @@ public class HistoryResponse {
     private double amountPaid ;          //bitta oy uchun tolagan summasi
     private double amountPayableMonthly ;//har oy tolanadigan summa
     private double indebtednessSum ;//qarzdorlik summasi
-    private Timestamp updatedDate;
+    private LocalDateTime updatedDate;
     private LocalDateTime monthlyPeriod ;
 }
