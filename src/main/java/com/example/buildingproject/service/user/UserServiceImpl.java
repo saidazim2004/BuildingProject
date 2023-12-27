@@ -71,12 +71,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDTO getByPhoneNumber(String phoneNumber) {
-        Optional<UserEntity> userEntityByPhoneNumber = userRepository.getUserEntityByPassportNo(phoneNumber);
-        if (userEntityByPhoneNumber.isPresent()){
-            return modelMapper.map(userEntityByPhoneNumber, UserResponseDTO.class);
+        Optional<UserEntity> userEntityByPhoneNumber = userRepository.getUserEntityByPhoneNumber(phoneNumber);
+
+        if (userEntityByPhoneNumber.isEmpty()){
+
+            throw new DataNotFoundException("Foydalanuvchi topilmadi telefon raqamini qayta kiriting : " +phoneNumber);
         }
         else {
-            throw new DataNotFoundException("User not found !");
+            return modelMapper.map(userEntityByPhoneNumber, UserResponseDTO.class);
         }
     }
 

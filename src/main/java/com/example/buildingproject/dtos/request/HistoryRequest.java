@@ -12,6 +12,6 @@ import java.util.UUID;
 
 public class HistoryRequest {
 
-    private UUID houseId ;
+    private UUID historyId ;
     private double sum;
 }

@@ -25,6 +25,9 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Query("from users u where not u.deleted and u.passportNo = :passportNo")
     Optional<UserEntity> getUserEntityByPassportNo(@Param("passportNo") String passportNo);
 
+    @Query("from users u where not u.deleted and u.phoneNumber = :phoneNumber")
+    Optional<UserEntity> getUserEntityByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
     boolean existsUserByEmail(String email);
 
     UserEntity getUserEntityById(UUID id);

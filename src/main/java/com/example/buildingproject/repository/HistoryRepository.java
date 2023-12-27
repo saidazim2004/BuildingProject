@@ -23,5 +23,6 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, UUID> {
     List<HistoryEntity> getUnpaidHistoryEntitiesYearAndForMonth(
             @Param("targetMonth") int targetMonth, @Param("targetYear") int targetYear
     );
-
+    @Query("FROM HistoryEntity h WHERE h.house.id = :house_id and h.user.id = :user_id")
+    ArrayList<HistoryEntity> getAllHistories(@Param("user_id") UUID userId, @Param("house_id") UUID houseId);
 }

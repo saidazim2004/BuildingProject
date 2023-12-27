@@ -13,5 +13,6 @@ public interface HouseService {
     ArrayList<HouseResponseDTO> getOwnerHouses(String passportNo);
 
 
+    ArrayList<HouseResponseDTO> getOwnerHousesByPhoneNumber(String passportNo);
 
 }

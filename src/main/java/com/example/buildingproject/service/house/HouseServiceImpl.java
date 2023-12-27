@@ -39,7 +39,7 @@ public class HouseServiceImpl implements HouseService {
 
         Optional<HouseEntity> house = houseRepository.findHouseEntityByHomeAddress(houseCreateDTO.getHomeAddress());
         if (house.isPresent()){
-            throw new HouseWasBoughtException("The house was bought");
+            throw new HouseWasBoughtException("Bu uy allaqachon sotib bo'lingan");
         } else {
             Optional<UserEntity> user = userRepository.getUserEntityByPassportNo(houseCreateDTO.getPassportNo());
 
@@ -49,8 +49,6 @@ public class HouseServiceImpl implements HouseService {
                 houseMap.setOwnerHouse(user.get());
 
                 houseRepository.save(houseMap);
-
-
 
                 LocalDateTime currentMonth = LocalDateTime.now();
                 while (currentMonth.isBefore(houseMap.getContractExpirationTime()) || currentMonth.isEqual(houseMap.getContractExpirationTime())) {
@@ -74,7 +72,7 @@ public class HouseServiceImpl implements HouseService {
             }
 
             else {
-                throw new DataNotFoundException("User not found");
+                throw new DataNotFoundException("Foydalanuvchi topilmadi passport seria raqamini qayta kirgazing !");
             }
         }
 
@@ -82,23 +80,18 @@ public class HouseServiceImpl implements HouseService {
 
 
     @Override
+    public ArrayList<HouseResponseDTO> getOwnerHousesByPhoneNumber(String phoneNum) {
+        Optional<UserEntity> user = userRepository.getUserEntityByPhoneNumber(phoneNum);
+
+        return getUserHouses(user,phoneNum);
+    }
+
+
+
+    @Override
     public ArrayList<HouseResponseDTO> getOwnerHouses(String passwordNo) {
-
         Optional<UserEntity> user = userRepository.getUserEntityByPassportNo(passwordNo);
-        if (user.isPresent()){
-            ArrayList<HouseEntity> houseEntities = houseRepository.findHouseEntitiesByOwnerId(user.get().getId());
-            if (houseEntities==null){
-                throw new DataNotFoundException("No houses found!");
-            }else {
-                return modelMapper.map(houseEntities, new TypeToken<ArrayList<HouseResponseDTO>>() {
-                }.getType());
-
-            }
-        }
-        else {
-            throw new DataNotFoundException("There is a mistake in the phone number");
-        }
-
+        return getUserHouses(user,passwordNo);
     }
 
 
@@ -117,6 +110,21 @@ public class HouseServiceImpl implements HouseService {
 
     }
 
+    private ArrayList<HouseResponseDTO> getUserHouses(Optional<UserEntity> user, String request) {
+        if (user.isPresent()){
+            ArrayList<HouseEntity> houseEntities = houseRepository.findHouseEntitiesByOwnerId(user.get().getId());
+            if (houseEntities==null){
+                throw new DataNotFoundException("No houses found!");
+            }else {
+                return modelMapper.map(houseEntities, new TypeToken<ArrayList<HouseResponseDTO>>() {
+                }.getType());
+
+            }
+        }
+        else {
+            throw new DataNotFoundException("Raqamingizni tekshiring hech nima topilmadi : "+request);
+        }
+    }
 
 
 

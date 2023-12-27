@@ -30,11 +30,18 @@ public class HouseController {
     }
 
 
-    @PostMapping("/getOwnerHouses")
+    @PostMapping("/getOwnerHousesByPassportNo")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHouses(@RequestParam String passportNo){
+    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPassportNo(@Valid @RequestParam String passportNo){
          ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHouses(passportNo);
          return ResponseEntity.ok(houseResponseDTOS);
+    }
+
+    @PostMapping("/getOwnerHousesByPhoneNumber")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPhoneNumber(@Valid @RequestParam String passportNo){
+        ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHousesByPhoneNumber(passportNo);
+        return ResponseEntity.ok(houseResponseDTOS);
     }
 
 

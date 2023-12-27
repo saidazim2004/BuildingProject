@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -17,9 +18,9 @@ public class BaseEntity {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private Timestamp updatedDate;
+    private LocalDateTime updatedDate;
 }
