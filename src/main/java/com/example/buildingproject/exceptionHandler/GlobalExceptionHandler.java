@@ -20,4 +20,6 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(404).body(errorDTO);
     }
+
+
 }

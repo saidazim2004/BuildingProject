@@ -1,5 +1,6 @@
 package com.example.buildingproject.service.user;
 
+import com.example.buildingproject.dtos.request.UserCreateDto;
 import com.example.buildingproject.dtos.response.UserResponseDTO;
 import com.example.buildingproject.entity.UserEntity;
 
@@ -17,5 +18,10 @@ public interface UserService {
 
     UserResponseDTO getByPhoneNumber(String phoneNumber);
 
+
+    String updatePhoneNumber(String oldPhoneNumber, String newPhoneNumber);
+
+
+    UserResponseDTO createClient(UserCreateDto userCreateDto);
 
 }

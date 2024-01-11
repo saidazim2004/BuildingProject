@@ -39,8 +39,8 @@ public class HouseController {
 
     @PostMapping("/getOwnerHousesByPhoneNumber")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPhoneNumber(@Valid @RequestParam String passportNo){
-        ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHousesByPhoneNumber(passportNo);
+    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPhoneNumber(@Valid @RequestParam String passportPhoneNumber){
+        ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHousesByPhoneNumber(passportPhoneNumber);
         return ResponseEntity.ok(houseResponseDTOS);
     }
 

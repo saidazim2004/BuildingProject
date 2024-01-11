@@ -1,8 +1,12 @@
 package com.example.buildingproject.service.user;
 
+import com.example.buildingproject.dtos.request.UserCreateDto;
 import com.example.buildingproject.dtos.response.UserResponseDTO;
 import com.example.buildingproject.entity.UserEntity;
+import com.example.buildingproject.enums.UserRole;
+import com.example.buildingproject.enums.UserStatus;
 import com.example.buildingproject.exceptions.DataNotFoundException;
+import com.example.buildingproject.exceptions.UserAlreadyExistException;
 import com.example.buildingproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -70,11 +74,41 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserResponseDTO createClient(UserCreateDto userCreateDto) {
+        Optional<UserEntity> userEntityByPassportNo = userRepository.getUserEntityByPassportNo(userCreateDto.getPassportNo());
+        Optional<UserEntity> userEntityByPhoneNumber = userRepository.getUserEntityByPhoneNumber(userCreateDto.getPhoneNumber());
+        if (userEntityByPhoneNumber.isEmpty() && userEntityByPassportNo.isEmpty()){
+            UserEntity map = modelMapper.map(userCreateDto, UserEntity.class);
+            map.setRole(UserRole.USER);
+            map.setStatus(ACTIVE);
+            userRepository.save(map);
+            return modelMapper.map(map , UserResponseDTO.class);
+        }
+        else {
+            throw new UserAlreadyExistException("Bu foydalanuchi avval jam royhatdan o'tkazilgan");
+        }
+    }
+
+    @Override
+    public String updatePhoneNumber(String oldPhoneNumber, String newPhoneNumber) {
+
+        Optional<UserEntity> user = userRepository.getUserEntityByPhoneNumber(oldPhoneNumber);
+        if(user.isEmpty()){
+            throw new DataNotFoundException("Foydalanuvchining eski telefon raqamini tekshirib kirgazing !");
+        }
+        else{
+            user.get().setPhoneNumber(newPhoneNumber);
+            userRepository.save(user.get());
+            return "Mijoning telefon raqami muaffaqiyatli o'zgartirildi" ;
+        }
+
+    }
+
+    @Override
     public UserResponseDTO getByPhoneNumber(String phoneNumber) {
         Optional<UserEntity> userEntityByPhoneNumber = userRepository.getUserEntityByPhoneNumber(phoneNumber);
 
         if (userEntityByPhoneNumber.isEmpty()){
-
             throw new DataNotFoundException("Foydalanuvchi topilmadi telefon raqamini qayta kiriting : " +phoneNumber);
         }
         else {
