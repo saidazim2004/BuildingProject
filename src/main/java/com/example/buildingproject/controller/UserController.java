@@ -1,15 +1,14 @@
 package com.example.buildingproject.controller;
 
+import com.example.buildingproject.dtos.request.UserCreateDto;
 import com.example.buildingproject.dtos.response.UserResponseDTO;
 
 import com.example.buildingproject.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,4 +22,22 @@ public class UserController {
         UserResponseDTO userResponseDTO = userService.getByPhoneNumber(phoneNumber);
         return ResponseEntity.ok(userResponseDTO);
     }
+
+    @PutMapping("/updatePhoneNumber")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<String> updatePhoneNumber(@Valid @RequestParam String oldPhoneNumber, @RequestParam String newPhoneNumber){
+        String result = userService.updatePhoneNumber(oldPhoneNumber , newPhoneNumber);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("createClient")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<UserResponseDTO> createClient(@Valid @RequestBody UserCreateDto userCreateDto){
+        UserResponseDTO userResponseDTO = userService.createClient(userCreateDto);
+        return ResponseEntity.ok(userResponseDTO);
+
+    }
+
+
+
 }

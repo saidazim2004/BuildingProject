@@ -82,7 +82,9 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public ArrayList<HouseResponseDTO> getOwnerHousesByPhoneNumber(String phoneNum) {
         Optional<UserEntity> user = userRepository.getUserEntityByPhoneNumber(phoneNum);
-
+        if (user.isEmpty()){
+            throw new DataNotFoundException("Foydalanuvchi topilmadi qaytadan nomerni tekshirib kiritib koring ");
+        }
         return getUserHouses(user,phoneNum);
     }
 
@@ -91,6 +93,9 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public ArrayList<HouseResponseDTO> getOwnerHouses(String passwordNo) {
         Optional<UserEntity> user = userRepository.getUserEntityByPassportNo(passwordNo);
+        if (user.isEmpty()){
+            throw new DataNotFoundException("Foydalanuvchi topilmadi qaytadan nomerni tekshirib kiritib koring ");
+        }
         return getUserHouses(user,passwordNo);
     }
 
@@ -113,8 +118,8 @@ public class HouseServiceImpl implements HouseService {
     private ArrayList<HouseResponseDTO> getUserHouses(Optional<UserEntity> user, String request) {
         if (user.isPresent()){
             ArrayList<HouseEntity> houseEntities = houseRepository.findHouseEntitiesByOwnerId(user.get().getId());
-            if (houseEntities==null){
-                throw new DataNotFoundException("No houses found!");
+            if (houseEntities.isEmpty()){
+                throw new DataNotFoundException("Bu foydalanuvchiga tegishli uylar mavjud emas");
             }else {
                 return modelMapper.map(houseEntities, new TypeToken<ArrayList<HouseResponseDTO>>() {
                 }.getType());
