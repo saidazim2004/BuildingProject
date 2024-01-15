@@ -21,6 +21,7 @@ import java.time.Period;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -78,6 +79,34 @@ public class HouseServiceImpl implements HouseService {
 
     }
 
+    @Override
+    public HouseResponseDTO changeOwnerOfTheHouse(UUID houseId, String newOwnerPassportNo) {
+
+        Optional<UserEntity> newUserEntityByPassportNo = userRepository.getUserEntityByPassportNo(newOwnerPassportNo);
+
+        if (newUserEntityByPassportNo.isEmpty()){
+            throw new DataNotFoundException("Hatolik , uyning yangi egasini passport raqamini tekshirib kirgazing !");
+        }
+        else {
+            Optional<HouseEntity> houseById = houseRepository.findById(houseId);
+            if (houseById.isEmpty()){
+                throw new DataNotFoundException("Uy topilmadi");
+            }else {
+                houseById.get().setOwnerHouse(newUserEntityByPassportNo.get());
+
+                ArrayList<HistoryEntity> historyEntitiesByHouseId = historyRepository.getHistoryEntitiesByHouseId(houseById.get().getId());
+                for (HistoryEntity history : historyEntitiesByHouseId) {
+                    if (history.getHouse().getId().equals(houseId)){
+                        history.setUser(newUserEntityByPassportNo.get());
+                        historyRepository.save(history);
+                    }
+                }
+
+                HouseEntity save = houseRepository.save(houseById.get());
+                return modelMapper.map(save , HouseResponseDTO.class);
+            }
+        }
+    }
 
     @Override
     public ArrayList<HouseResponseDTO> getOwnerHousesByPhoneNumber(String phoneNum) {

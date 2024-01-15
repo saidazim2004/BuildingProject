@@ -15,4 +15,6 @@ public interface HouseService {
 
     ArrayList<HouseResponseDTO> getOwnerHousesByPhoneNumber(String passportNo);
 
+    HouseResponseDTO changeOwnerOfTheHouse(UUID houseId, String newOwnerPassportNo);
+
 }

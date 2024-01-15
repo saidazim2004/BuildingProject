@@ -1,8 +1,6 @@
 package com.example.buildingproject.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class HouseEntity extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     private UserEntity ownerHouse ;
     @Column(nullable = false)
     private int contractNumber ; //Shartnoma raqami

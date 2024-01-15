@@ -14,6 +14,14 @@ public interface HouseRepository extends JpaRepository<HouseEntity , UUID> {
     Optional<HouseEntity> findHouseEntityByHomeAddress(String homeAddress);
     @Query("from HouseEntity h where  h.ownerHouse.id = :owner_house_id")
     ArrayList<HouseEntity> findHouseEntitiesByOwnerId(@Param("owner_house_id") UUID owner_house_id);
-//    @Query("from HouseEntity h where  h.id = :id")
+
+
+
+
+
+
+    HouseEntity findHouseEntitiesByOwnerHouse_PassportNo(String passportNo);
+
+    //    @Query("from HouseEntity h where  h.id = :id")
 //    Optional<HouseEntity> getHouseEntityById(@Param("id") UUID id );
 }
