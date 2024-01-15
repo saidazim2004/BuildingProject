@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -32,15 +33,28 @@ public class HouseController {
 
     @PostMapping("/getOwnerHousesByPassportNo")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
-    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPassportNo(@Valid @RequestParam String passportNo){
-         ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHouses(passportNo);
-         return ResponseEntity.ok(houseResponseDTOS);
+    public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPassportNo(@Valid @RequestParam String passportNo, Principal principal){
+        String name = principal.getName();
+        System.out.println("name = " + name);
+        ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHouses(passportNo);
+
+        return ResponseEntity.ok(houseResponseDTOS);
     }
 
     @PostMapping("/getOwnerHousesByPhoneNumber")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     public ResponseEntity<ArrayList<HouseResponseDTO>> getOwnerHousesByPhoneNumber(@Valid @RequestParam String passportPhoneNumber){
         ArrayList<HouseResponseDTO> houseResponseDTOS = houseService.getOwnerHousesByPhoneNumber(passportPhoneNumber);
+        return ResponseEntity.ok(houseResponseDTOS);
+    }
+
+
+    @PostMapping("/changeOwnerOfTheHouse")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'ADMIN')")
+    public ResponseEntity<HouseResponseDTO> changeOwnerOfTheHouse(@Valid @RequestParam UUID houseId
+            , @RequestParam String newOwnerPassportNo ){
+
+        HouseResponseDTO houseResponseDTOS = houseService.changeOwnerOfTheHouse(houseId , newOwnerPassportNo);
         return ResponseEntity.ok(houseResponseDTOS);
     }
 
